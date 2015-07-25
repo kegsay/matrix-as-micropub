@@ -1,0 +1,30 @@
+IndieAuth
+---------
+- User invites @micropub:domain to a private room
+- >>> !indieauth <url>
+- <<< https://yourdomain/oauth
+- Do the dance (POST back results in:)
+- <<< You are now authenticated as <domain> for <user_id>
+
+AS now has a 3-uple (uid, domain, token)
+
+Micropub => Matrix
+==================
+
+NOT YET IMPLEMENTED:
+- OAuth sign in to Matrix account (HS *is* an OAuth endpoint; different from reg/login using OAuth)
+
+- AS exposes /entry (or w/e the rel="micropub" link says)
+- Expect valid token in request
+- Accept only h=entry for now
+- map content field directly onto m.room.message
+- Detect HTML and use org.matrix.custom.html ?
+- AS then sends message as <user_id> to ???
+
+Matrix => Micropub
+==================
+AS acts as a web app.
+
+- Send message in private room with @micropub:domain
+- Map message to micropub entry
+- Hit out to <url> with micropub, using <token>.
