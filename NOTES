@@ -11,15 +11,29 @@ AS now has a 3-uple (uid, domain, token)
 Micropub => Matrix
 ==================
 
+Target room:
+- Invite @micropub:domain to a room.
+- >>> !publish category=foo,bar
+- <<< Micropubs with 'foo' or 'bar' as categories will be published here.
+- >>> !publish
+- <<< This room will be used as the default room for publishing micropubs. <-- if not set, barf on micropub requests
+
 NOT YET IMPLEMENTED:
 - OAuth sign in to Matrix account (HS *is* an OAuth endpoint; different from reg/login using OAuth)
+- So we need the *AS* to be the authorization endpoint(!) and send in our namespaced user_ids (@micropub_<domain>)
+   * Incoming request from micropub client
+   * Grab the me= and map the domain to a user_id.
+   * Splat message from @micropub saying "yo someone trying to login as you, please type in $random_string."
+   * Show 'login/auth' page with token entry box.
+   * If right token entered, they have control over that user_id so then 302 and make a token.
+   * Assign the tuple token/user_id.
 
 - AS exposes /entry (or w/e the rel="micropub" link says)
 - Expect valid token in request
 - Accept only h=entry for now
 - map content field directly onto m.room.message
 - Detect HTML and use org.matrix.custom.html ?
-- AS then sends message as <user_id> to ???
+- AS then sends message as @micropub_<domain> to configured rooms.
 
 Matrix => Micropub
 ==================
@@ -27,4 +41,26 @@ AS acts as a web app.
 
 - Send message in private room with @micropub:domain
 - Map message to micropub entry
-- Hit out to <url> with micropub, using <token>.
+- Hit out to <url> (from rel="micropub" on the domain) with micropub, using <token>.
+
+Data structures
+---------------
+Users => pkey, user_id, domain, oauth_token
+Rooms => pkey, user_id, room_id
+Categories => pkey, category_name
+Rooms-Categories => pkey, [Rooms pkey], [Categories pkey]
+AssignedTokens => pkey, token, user_id 
+
+On Matrix message:
+- Grab token and domain for user_id
+- Hit domain with token and mapped micropub.
+- Feed response as a notice back to the room.
+
+On Micropub messages:
+- Grab user_id for assigned token; bail out if no match.
+- Grab rooms for configured categories in the micropub.
+- Send messages f.e room.
+
+
+
+
