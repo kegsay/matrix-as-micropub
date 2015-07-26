@@ -46,7 +46,7 @@ AS acts as a web app.
 Data structures
 ---------------
 Users => pkey, user_id, domain, oauth_token
-Rooms => pkey, user_id, room_id
+Rooms => pkey, user_id, room_id, is_admin
 Categories => pkey, category_name
 Rooms-Categories => pkey, [Rooms pkey], [Categories pkey]
 AssignedTokens => pkey, token, user_id 

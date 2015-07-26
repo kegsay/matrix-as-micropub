@@ -9,6 +9,10 @@ var opts = nopt({
     "generate-registration": Boolean
 });
 
+micropub.configure({
+    dbname: "data.db"
+});
+
 appservice.registerService({
     service: micropub,
     homeserver: {
