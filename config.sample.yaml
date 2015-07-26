@@ -1,0 +1,11 @@
+homeserver:
+  url: "http://localhost:8008"
+  domain: localhost
+  token: 651a1b94bc37fdfe3b73f7000bb8e92eae6e13d5
+appservice:
+  url: "http://localhost:8778"
+  token: dbb5539d327f5e8ccc46ed2d55eb6589e057f10b
+  port: 8778
+  oauth:
+    port: 8779
+    path: "/oauth/callback"

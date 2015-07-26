@@ -2,13 +2,14 @@
 var db = require("./lib/db");
 var lib = require("./lib/micropub");
 
-var micropubUser;
+var micropubUser, oauthInfo;
 
 module.exports.serviceName = "micropub";
 module.exports.configure = function(config) {
     if (!config.dbname) {
         throw new Error("Required: 'dbname'");
     }
+    oauthInfo = config.oauth;
     db.init(config.dbname);
 };
 
@@ -23,11 +24,11 @@ module.exports.register = function(controller, serviceConfig) {
         micropubUser,
         serviceConfig.appservice.url,
         {
-            path: "/oauth/redirect",
-            port: 8779,
+            path: oauthInfo.path,
+            port: oauthInfo.port,
             uri: (asurl.indexOf(":") === -1 ? 
-                asurl + "/oauth/redirect" :
-                asurl.replace(/:[0-9]+/, ":8779") + "/oauth/redirect"
+                asurl + oauthInfo.path :
+                asurl.replace(/:[0-9]+/, ":"+oauthInfo.port) + oauthInfo.path
             )
         }
     );

@@ -6,26 +6,41 @@ var yaml = require("js-yaml");
 var fs = require("fs");
 var nopt = require("nopt");
 var opts = nopt({
-    "generate-registration": Boolean
+    "generate-registration": Boolean,
+    "config": String
+}, {
+    "-c": "config"
 });
 
+// load the config file
+var configFile;
+try {
+    configFile = yaml.safeLoad(fs.readFileSync(opts.config, 'utf8'));
+} 
+catch (e) {
+    console.error("Failed to read config file '%s' : %s", opts.config, e);
+    process.exit(1);
+    return;
+}
+
 micropub.configure({
-    dbname: "data.db"
+    dbname: "data.db",
+    oauth: configFile.appservice.oauth
 });
 
 appservice.registerService({
     service: micropub,
     homeserver: {
-        url: "http://localhost:8008",
-        token: "hs_token",
-        domain: "localhost"
+        url: configFile.homeserver.url,
+        token: configFile.homeserver.token,
+        domain: configFile.homeserver.domain
     },
     appservice: {
-        url: "http://localhost:8778",
-        token: "as_token"
+        url: configFile.appservice.url,
+        token: configFile.appservice.token
     },
     http: {
-        port: 8778
+        port: configFile.appservice.port
     }
 });
 
