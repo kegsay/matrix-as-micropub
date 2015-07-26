@@ -17,7 +17,8 @@ appservice.registerService({
     service: micropub,
     homeserver: {
         url: "http://localhost:8008",
-        token: "hs_token"
+        token: "hs_token",
+        domain: "localhost"
     },
     appservice: {
         url: "http://localhost:8778",
