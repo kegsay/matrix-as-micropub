@@ -1,0 +1,29 @@
+{
+  "name": "matrix-appservice-micropub",
+  "version": "0.0.1",
+  "description": "Transform any Matrix client into a Micropub client",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Kegsay/matrix-as-micropub.git"
+  },
+  "keywords": [
+    "matrix-org",
+    "micropub"
+  ],
+  "author": "Kegan Dougal",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/Kegsay/matrix-as-micropub/issues"
+  },
+  "dependencies": {
+    "sqlite3": "~3.0.9",
+    "matrix-appservice": "~0.1.0",
+    "q": "~1.4.1",
+    "nopt": "~3.0.3",
+    "js-yaml": "~3.3.1"
+  }
+}
