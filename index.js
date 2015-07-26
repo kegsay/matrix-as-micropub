@@ -38,6 +38,9 @@ module.exports.register = function(controller, serviceConfig) {
         }
     });
     controller.on("type:m.room.message", function(event) {
+        if (event.user_id === micropubUser) {
+            return;
+        }
         lib.handleMessage(event.room_id, event.user_id, event.content.body);
     });
 };
