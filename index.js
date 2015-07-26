@@ -16,11 +16,20 @@ module.exports.register = function(controller, serviceConfig) {
     micropubUser = (
         "@" + module.exports.serviceName + ":" + serviceConfig.homeserver.domain
     );
+    var asurl = serviceConfig.appservice.url;
     lib.init(
         serviceConfig.homeserver.url,
         serviceConfig.appservice.token,
         micropubUser,
-        serviceConfig.appservice.url
+        serviceConfig.appservice.url,
+        {
+            path: "/oauth/redirect",
+            port: 8779,
+            uri: (asurl.indexOf(":") === -1 ? 
+                asurl + "/oauth/redirect" :
+                asurl.replace(/:[0-9]+/, ":8779") + "/oauth/redirect"
+            )
+        }
     );
     controller.addRegexPattern("users", "@micropub_.*", true);
     controller.on("type:m.room.member", function(event) {
