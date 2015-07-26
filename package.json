@@ -1,6 +1,6 @@
 {
   "name": "matrix-appservice-micropub",
-  "version": "0.0.1",
+  "version": "0.0.1-b",
   "description": "Transform any Matrix client into a Micropub client",
   "main": "index.js",
   "scripts": {
