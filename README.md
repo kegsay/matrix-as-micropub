@@ -5,6 +5,11 @@ Transform any Matrix client into a Micropub client instantly.
  - You need to have a [home server](https://github.com/matrix-org/synapse) installed and running.
 
 ## Setup
+ - Download the source code: `git clone https://github.com/Kegsay/matrix-as-micropub.git`
+ - Install the app:
+   - `npm install`
+   - `npm link` (might require sudo)
+   - `npm link matrix-appservice-micropub`
  - Copy `config.sample.yaml` and edit the URL and token fields. The tokens can be anything you want.
  - Generate a registration file by typing `node app -c your.config.file.yaml --generate-registration`
  - Make your home server aware of the registration file (setting `app_service_config_files` in `homeserver.yaml` to the path of the registration file, remember it's a list so use `["file/path.yaml"]`)
